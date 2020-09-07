@@ -84,7 +84,7 @@ $persister = new Flysystem('/path/to/example.model', $storage);
 Shortcut to return a Flysystem Persister backed by the [Local](https://flysystem.thephpleague.com/v1/docs/adapter/local/) filesystem
 
 ```php
-public static local(string $path, bool $history = false, ?Serializer $serializer = null) : self
+public static local(string $path, bool $history = false, ?Serializer $serializer = null, ?string $root = null) : self
 ```
 
 Shortcut to return a Flysystem Persister backed by an [FTP Server](https://flysystem.thephpleague.com/v1/docs/adapter/ftp/).
