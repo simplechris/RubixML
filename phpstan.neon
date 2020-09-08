@@ -13,3 +13,7 @@ parameters:
         - src/Graph/Trees/BallTree.php
         - src/Graph/Trees/ITree.php
         - src/Graph/Trees/KDTree.php
+        - src/AnomalyDetectors/OneClassSVM.php
+        - src/Classifiers/SVC.php
+        - src/Kernels/SVM/*
+        - src/Regressors/SVR.php
