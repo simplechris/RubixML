@@ -76,13 +76,14 @@ class Flysystem implements Persister, Stringable
      * @param string $path
      * @param bool $history
      * @param \Rubix\ML\Persisters\Serializers\Serializer|null $serializer
-     * @param string|null $root The location that $path is defined relative to. By default it will use the filesystem root.
+     * @param string|null $root An optional prefix to prepend to the $path, if null $path will be considered an absolute path
      * @return \Rubix\ML\Persisters\Flysystem
      */
     public static function local(string $path, bool $history = false, ?Serializer $serializer = null, ?string $root = null) : Flysystem
     {
         if (!$root) {
-            $root = (stripos(PHP_OS, 'WIN') === 0) ? '\\' : '/';
+            $root = dirname($path);
+            $path = basename($path);
         }
 
         $filesystem = new League\Flysystem\Filesystem(new Local($root));

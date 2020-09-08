@@ -2,6 +2,7 @@
 
 namespace Rubix\ML\Tests\Persisters;
 
+use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\Memory\MemoryAdapter;
@@ -9,6 +10,7 @@ use Rubix\ML\Persistable;
 use Rubix\ML\Persisters\Flysystem;
 use Rubix\ML\Persisters\Persister;
 use Rubix\ML\Classifiers\DummyClassifier;
+use Rubix\ML\Persisters\Serializers\Native;
 use RuntimeException;
 use PHPUnit\Framework\TestCase;
 
@@ -157,6 +159,36 @@ class FlysystemTest extends TestCase
 
         $this->filesystem->put(self::PATH, '');
         $this->persister->load();
+    }
+
+    /**
+     * @test
+     */
+    public function testLocalStaticMethodWithExplicitRootDir() : void
+    {
+        $dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'RubixML';
+
+        $this->filesystem = new Filesystem(new Local($dir));
+
+        $this->persister = Flysystem::local(self::PATH, false, new Native(), $dir);
+        $this->persister->save($this->persistable);
+
+        $this->assertTrue($this->filesystem->has(self::PATH));
+    }
+
+    /**
+     * @test
+     */
+    public function testLocalStaticMethodWithoutExplicitRootDir() : void
+    {
+        $dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'RubixML';
+
+        $this->filesystem = new Filesystem(new Local(dirname($dir . self::PATH)));
+
+        $this->persister = Flysystem::local($dir . self::PATH);
+        $this->persister->save($this->persistable);
+
+        $this->assertTrue($this->filesystem->has(basename($dir . self::PATH)));
     }
 
     protected function assertPreConditions() : void
