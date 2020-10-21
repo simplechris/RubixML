@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest, macos-latest]
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.2', '7.3', '7.4', '8.0']
 
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         run: composer validate
 
       - name: Install Dependencies
-        run: composer install
+        run: composer install --ignore-platform-reqs
 
       - name: Static Analysis
         run: composer analyze
