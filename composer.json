@@ -41,7 +41,7 @@
         "symfony/polyfill-php80": "^1.17"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "2.16.*",
+        "friendsofphp/php-cs-fixer": "dev-master",
         "phpbench/phpbench": "0.17.*",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
