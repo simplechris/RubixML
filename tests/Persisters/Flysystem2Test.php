@@ -4,6 +4,7 @@ namespace Rubix\ML\Tests\Persisters;
 
 use Rubix\ML\Persistable;
 use Rubix\ML\Persisters\Flysystem;
+use Rubix\ML\Persisters\Flysystem2;
 use Rubix\ML\Persisters\Persister;
 use Rubix\ML\Classifiers\DummyClassifier;
 use League\Flysystem\Filesystem;
@@ -18,7 +19,7 @@ use RuntimeException;
  * @group Persisters
  * @covers \Rubix\ML\Persisters\Flysystem
  */
-class FlysystemTest extends TestCase
+class FlysystemTest2 extends TestCase
 {
     /**
      * The path to the test file.
@@ -47,11 +48,17 @@ class FlysystemTest extends TestCase
      */
     protected function setUp() : void
     {
-        $this->filesystem = new Filesystem(new InMemoryFilesystemAdapter());
+        if (!interface_exists('League\Flysystem\FilesystemOperator')) {
+            $this->markTestSkipped('Flysystem2 is unavailable. Skipping tests...');
+        }
 
-        $this->persistable = new DummyClassifier();
+        if (class_exists(InMemoryFilesystemAdapter::class)) {
+            $this->filesystem = new Filesystem(new InMemoryFilesystemAdapter());
 
-        $this->persister = new Flysystem(self::PATH, $this->filesystem);
+            $this->persistable = new DummyClassifier();
+
+            $this->persister = new Flysystem2(self::PATH, $this->filesystem);
+        }
     }
 
     /**
@@ -59,7 +66,7 @@ class FlysystemTest extends TestCase
      */
     public function build() : void
     {
-        $this->assertInstanceOf(Flysystem::class, $this->persister);
+        $this->assertInstanceOf(Flysystem2::class, $this->persister);
         $this->assertInstanceOf(Persister::class, $this->persister);
     }
 

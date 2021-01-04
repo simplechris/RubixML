@@ -40,11 +40,11 @@
         "symfony/polyfill-mbstring": "^1.0",
         "symfony/polyfill-php73": "^1.20",
         "symfony/polyfill-php80": "^1.17",
-        "league/flysystem": "~2.0.2"
+        "league/flysystem": "1.x|2.x"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.17.*",
-        "league/flysystem-memory": "^2.0",
+        "league/flysystem-memory": "1.x|2.x",
         "phpbench/phpbench": "1.0.0-alpha4",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
